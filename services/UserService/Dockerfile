@@ -9,5 +9,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app ./
 EXPOSE 5000
+ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_BASE=/api/users
 HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit
 ENTRYPOINT ["dotnet", "UserService.dll"]

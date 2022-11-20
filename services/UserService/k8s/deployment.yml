@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+     labels:
+       app: user-service
+    spec:
+      containers:
+        - image: ms-user-service
+          imagePullPolicy: Never
+          name: user-service
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          ports:
+            - containerPort: 5000

@@ -1,19 +1,14 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-
 var builder = WebApplication.CreateBuilder(args);
-
-builder.WebHost.ConfigureKestrel(options =>
-    options.ListenAnyIP(5000, listenOptions =>
-        {
-          listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-        }));
 
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UsePathBase(app.Configuration["ASPNETCORE_BASE"] ?? "/");
+app.UseRouting();
+
 app.MapHealthChecks("/health");
 
-app.MapGet("/hello", () => "Hello from UserService!");
+app.MapGet("/", () => "Hello from UserService!");
 
 app.Run();

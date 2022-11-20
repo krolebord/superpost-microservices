@@ -14,10 +14,10 @@ export const ServiceStatus: FC<Props> = (props) => {
     const abortController = new AbortController();
     fetch(healthCheckUrl, { signal: abortController.signal })
       .then((response) => {
-        return response.text();
-      })
-      .then((data) => {
-        setStatus(data === 'ok' ? 'ok' : 'error');
+        if(!response.ok) {
+          throw new Error('Health check failed');
+        }
+        setStatus('ok');
       })
       .catch(() => {
         setStatus('error');

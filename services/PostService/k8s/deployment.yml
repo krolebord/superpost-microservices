@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-service
+  template:
+    metadata:
+     labels:
+       app: post-service
+    spec:
+      containers:
+        - image: ms-post-service
+          imagePullPolicy: Never
+          name: post-service
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          ports:
+            - containerPort: 5000

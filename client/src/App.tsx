@@ -11,8 +11,8 @@ export const Header = () => {
 export const Footer = () => {
   return (
     <footer className="border-t border-white/20 flex gap-6 px-4">
-      <ServiceStatus label="Posts service: " healthCheckUrl="/posts/health" />
-      <ServiceStatus label="Users service: " healthCheckUrl="/users/health" />
+      <ServiceStatus label="Posts service: " healthCheckUrl="/api/posts/health" />
+      <ServiceStatus label="Users service: " healthCheckUrl="/api/users/health" />
     </footer>
   );
 };

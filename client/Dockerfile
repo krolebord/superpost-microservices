@@ -3,8 +3,8 @@ RUN apk update && apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@7.16.1 --activate 
 WORKDIR /source
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm ci
-COPY client/. ./
+RUN pnpm install --frozen-lockfile
+COPY . .
 RUN pnpm build
 
 FROM nginx:stable-alpine

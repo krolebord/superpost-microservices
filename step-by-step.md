@@ -32,3 +32,10 @@ or
 ## Delete services and built services
 1. `sh start.sh delete`
 2. `sh delete.sh`
+
+---
+
+## Dev nginx
+```
+docker compose -f dev/docker-compose.nginx.yml up -d
+```

@@ -4,7 +4,7 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-app.UsePathBase(app.Configuration["ASPNETCORE_BASE"] ?? "/");
+app.UsePathBase(app.Configuration["ASPNETCORE_BASE"] ?? "/api/posts");
 app.UseRouting();
 
 app.MapHealthChecks("/health");

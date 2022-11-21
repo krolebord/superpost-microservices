@@ -1,0 +1,65 @@
+postgresql:
+  fullnameOverride: postgres
+  auth:
+    postgresPassword: "mysecretpassword"
+  image:
+    tag: 15.1
+    repository: postgres
+  persistence:
+    size: 512Mi
+    mountPath: /var/lib/postgresql/data
+
+secrets:
+  user-service-secret:
+    ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1VzZXJzOw=="
+  post-service-secret:
+    ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1Bvc3RzOw=="
+
+microservises:
+  client:
+    image:
+      name: ms-client
+    service:
+      ports:
+        - name: http
+          containerPort: 80
+          port: 80
+    ingress:
+      path: /
+      port: http
+
+  user-service:
+    replicaCount: 2
+    migrations:
+      image:
+        name: ms-user-service-migrator
+      secret: user-service-secret
+    image:
+      name: ms-user-service
+    secret: user-service-secret
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      path: /api/users
+      port: http
+
+  post-service:
+    replicaCount: 2
+    migrations:
+      image:
+        name: ms-post-service-migrator
+      secret: post-service-secret
+    image:
+      name: ms-post-service
+    secret: post-service-secret
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      path: /api/posts
+      port: http

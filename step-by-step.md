@@ -10,9 +10,9 @@
 ### Kubernetes
  - `minukube`
  - `kubectl`
+ - `helm`
 
 #### Start minikube
-  
  - `sh init.sh`
 
 or
@@ -25,9 +25,14 @@ or
  - `sh build.sh`
 
 
+## Start with helm
+  - `helm install local helm`
+  - `minikube tunnel`
+  - `http://localhost`
+
 ## Start services
 1. `sh start.sh`
-2. visit either `http://localhost`
+2. visit `http://localhost`
 
 ## Delete services and built images
  - `sh delete.sh`

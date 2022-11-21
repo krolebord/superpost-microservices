@@ -6,11 +6,9 @@ COPY . .
 RUN dotnet publish -c release -o /app --no-restore
 
 FROM ms-migrator as migrator
-WORKDIR /
+WORKDIR /app
 COPY --from=build /app/PostService.dll ./
-ARG CONNECTION_STRING
-ENV CONNECTION_STRING=${CONNECTION_STRING}
-CMD "dotnet Migrator.dll -- --str $CONNECTION_STRING --dll PostService.dll"
+ENTRYPOINT ["dotnet", "Migrator.dll", "--dll", "PostService.dll"]
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 WORKDIR /app

@@ -12,6 +12,13 @@ spec:
      labels:
        app: post-service
     spec:
+      initContainers:
+        - name: run-migrations
+          image: ms-post-service-migrator
+          imagePullPolicy: Never
+          envFrom:
+            - secretRef:
+                name: post-service-secret
       containers:
         - image: ms-post-service
           imagePullPolicy: Never
@@ -22,3 +29,6 @@ spec:
               cpu: "1"
           ports:
             - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: post-service-secret

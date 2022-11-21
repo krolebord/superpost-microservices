@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Migrator;
 
 var dllFileOption = new Option<string>("--dll", "Dll file name") { IsRequired = true };
-var connectionStringOption = new Option<string>("--str", "Connection string") { IsRequired = true };
 
 var migrateCommand = new RootCommand("Migrate db");
-migrateCommand.AddOption(connectionStringOption);
 migrateCommand.AddOption(dllFileOption);
 
-migrateCommand.SetHandler(async (dll, str) => 
+migrateCommand.SetHandler(async (dll) => 
 {
     var directory = AssemblyHelpers.GetAssemblyDirectory();
     var path = Path.Join(directory, dll);
@@ -30,6 +28,9 @@ migrateCommand.SetHandler(async (dll, str) =>
             throw new Exception("Multiple context types found");
     }
 
+    var str = Environment.GetEnvironmentVariable("ConnectionStrings__Postgres");
+    if (str is null) throw new Exception("Couldn't load connection string");
+
     var contextType = contextTypes.First();
     var optionsBuilderType = typeof(DbContextOptionsBuilder<>).MakeGenericType(contextType);
     dynamic optionsBuilder = Activator.CreateInstance(optionsBuilderType) ?? throw new Exception("Couldn't create context options builder");
@@ -38,6 +39,6 @@ migrateCommand.SetHandler(async (dll, str) =>
 
     var context = (DbContext)Activator.CreateInstance(contextType, optionsBuilder.Options) ?? throw new Exception("Couldn't create db context");
     await context.Database.MigrateAsync();
-}, dllFileOption, connectionStringOption);
+}, dllFileOption);
 
 await migrateCommand.InvokeAsync(args);

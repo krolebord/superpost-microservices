@@ -6,5 +6,5 @@ COPY . .
 RUN dotnet publish -c release -o /out --no-restore
 
 FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine
-WORKDIR /
+WORKDIR /app
 COPY --from=build /out ./

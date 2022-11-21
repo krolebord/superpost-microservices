@@ -22,15 +22,16 @@ app.UseSwaggerUI();
 
 app.MapHealthChecks("/health");
 
+app.MapGet("/", async (PostsContext context) => {
+    var posts = await context.Posts.ToListAsync();
+    var postDtos = posts.Select(PostDto.FromPost);
+    return Results.Ok(postDtos);
+});
+
 app.MapGet("/{id:guid}", async ([FromRoute] Guid id, PostsContext context) => {
     var post = await context.Posts.FirstOrDefaultAsync(x => x.Id == id);
     if (post is null) return Results.NotFound();
-    return Results.Ok(new
-    {
-        post.Id,
-        post.Title,
-        post.Content
-    });
+    return Results.Ok(PostDto.FromPost(post));
 });
 
 app.MapPost("/", async ([FromBody] PostCreateDto postDto, PostsContext context) => {

@@ -1,4 +1,8 @@
-import { ServiceStatus } from "./ServiceStatus";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { FC } from "react";
+import { Posts } from "./components/Posts";
+import { ServiceStatus } from "./components/ServiceStatus";
+import { queryClient } from "./query-client";
 
 export const Header = () => {
   return (
@@ -17,12 +21,18 @@ export const Footer = () => {
   );
 };
 
+export const Root: FC<{ children?: React.ReactNode }> = ({ children }) => {
+  return <QueryClientProvider client={queryClient}>
+    {children}
+  </QueryClientProvider>
+}
+
 export const App = () => {
-  return (<>
+  return (<Root>
     <Header />
     <main className="p-4">
-      <h1>React App</h1>
+      <Posts />
     </main>
     <Footer />
-  </>)
+  </Root>)
 }

@@ -14,7 +14,16 @@ secrets:
     ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1VzZXJzOw=="
   post-service-secret:
     ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1Bvc3RzOw=="
-
+  auth-service-secret:
+    ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc0F1dGg7Ow=="
+    Jwt__PrivateKey: "TUlJRXBRSUJBQUtDQVFFQXRrUjZvZnh0TDhTUEtqSEZhT0o5Q2NNZUFQNWJJK0JGMzNTbkZYSkhLS0pOTTdWVEp5NjRkWWZQUmVqMXZSVGhzbXZvMUhkZWpWR2ZhZlRCd2FyenlOZ0l5emVoaW1uYTZrR0lYNCtycXhYT3pGTkF2SUJ0UW5pZnRHaHZ6emhUaHdZWTErYlNNaGxGYkZRTlF5ZFcxcjgyeE1kQUx3anhVTGtwcmVvTENPMitNK2NnMkp4b213TDVSbk54RWNEcUl0a0tBREVpMXBMekRkWnZyK2lodkZDdHh3eUx1clB2U0FQSWMrMFR0dGVreE9EM0lLMGFJR3FwaC9NNUpLZlNrazBQQWJhWlFtMGwranh4WWdUbkVYR0dmdUpHNlVPSmI2S0IyMTBnK0xlU3NwNlR3VitLMlphaStQYUYwTGVyTUFHL1dBZGRVVzdaV0xXYWFTMGt2d0lEQVFBQkFvSUJBRmRZNCtnakgzUkgzMUFhUC8rdW9ydDk3VEFPdFVDeEp1c2FiVVFDMndVbkdwWlFMRVJYeUlCU2tFdHhnK3FVU2tFR0k3TkdiV0tPSGpaWjNFemlqeWZPR0JERFhVQUcwS2w0dEZFUGVmWm9ZZzFiVEdmSnFCSzEyZHRNUFdEeUhsMVQxNjRINk8yblhMUzRadzZxbUp3YlVMVG13K1NHaFpibzFZZUo1TFhtNGViT1FsZjZjR3pPVlNZcTZxczNDMVV6dmdPYzBRZ0ZCNDFtLyt5Mm1icEZ5eEZGN2IxZUJSS3BsTmN0VE1uSUV1SmJ1QVR1MTF1L0J4Tmh2SlpFVFBWa0w5MlpJZDR4WHU5R0s4OVdjKzNpVGVGZUhFTzJrS2ZDK3ZBTjhaMjR1eDBuNDJXVnNDV0MvMC9KZzl1OGs2Rm03SUdjUFJRWXJkMlBNOS9DU1lrQ2dZRUE1R0dnRGVXNnh5eGhZYUQ1U09UMlBmdmFFcEQvMFQ3N1hmdi9Ddlc0dm9JVE01Z3FKcnIrR3VXdUZ5eEhyUXU5am1Wb1NoVE5HV01ha3FpM0V1UXJZaFRiSTJmbi8xcEtxSkJwZExVL1IyeThHRGJkclFnSlV1UjNqVUFVbXk1akRuU0hZMHk3ZFV3bG1TcGw5TXlBWUkvUzRkSERMdkdlSUJ1cmxnbGZhdHNDZ1lFQXpFODdYaTVXUG83VWNHRHpaWi9wU3A5K0NBOUJsVDB5VFFUZ2NEOC9xQUxia0drWFRZbXBIRU05eGZIYTY4NlRqcHNFbmtWNHNiR3BiemZJQll6RHQrKzg0aWZPZFhYMkJsN0ZQbUJZZUlIbzlKcnFDakhOU1o5Z2tVRE92Nll6cldYcXBiN1FsMUxnQmtFNkdFb0szNXBFMzdpTlh6aUZabW5tNWhuL0tPMENnWUVBZ3luS2FaRGg5NWYyaWNLUXlSdXVqS1REZHR4Ti85ZmpOL1FOWXpjQ2xtOVFKZGFqaHNEb1JYeFp3cmRNcHdiU0pDRDdoMmh3N3I2ck9VV3FkekFSOW0reDk2Q3FiazVtQ0crQUVXWXk1SXQvYjR5N1BiQWE0citTSmM2Q3h5a1ovT2hTQldiQlZybVg4bUtXVWNUTmlpZXYzci9CRUluMTNjem1lL0lBR2ZjQ2dZRUF6Qm5DMXgwM0x4dUVnaGQ0VDJkbXFST1gxZmxYclAwTGlRRjhMT1lpYzNjWFhMWi9md2dzbG4xZDhxYmY2bjNkenJKeDlLSzJKZDJ6dzlWWHpxT0d5Zk9ISCs1Z1E5dHB3WWRmU0NiN2VyZGN2eThhNnNCQnNuQ3pDYWhTWWdab3phcG90TmRnaml0T2ZURWdGaSt4bVJzRi92RGcyZVVlN3VhUXNnSDZjeWtDZ1lFQXNueCtlSzI2Tkg3TXdlTHA3anB1Vzl1b094RHNVN1haSFNmZGpEM2ltYTVTN0EzQktRcnVtVjhPQlMwU0tmWlRadEcyMG5kKysyanJVSkg4M0kyZE9iKyt6SElaeWgySHc3dmZic2RxZ0JqOWt5MlNEN2QxaHlJNVVzb1RWZDhsTXhwVjdkQkN0K1RadUUyL1Jpa0x0WllNd1A1OFN6WUhzUlFPWlRDdll0UT0K"
+configMaps:
+  common:
+    Jwt__Issuer: "superpost"
+    Jwt__Audience: "superpost"
+    Jwt__PublicKey: "MIIBCgKCAQEAtkR6ofxtL8SPKjHFaOJ9CcMeAP5bI+BF33SnFXJHKKJNM7VTJy64dYfPRej1vRThsmvo1HdejVGfafTBwarzyNgIyzehimna6kGIX4+rqxXOzFNAvIBtQniftGhvzzhThwYY1+bSMhlFbFQNQydW1r82xMdALwjxULkpreoLCO2+M+cg2JxomwL5RnNxEcDqItkKADEi1pLzDdZvr+ihvFCtxwyLurPvSAPIc+0TttekxOD3IK0aIGqph/M5JKfSkk0PAbaZQm0l+jxxYgTnEXGGfuJG6UOJb6KB210g+LeSsp6TwV+K2Zai+PaF0LerMAG/WAddUW7ZWLWaaS0kvwIDAQAB"
+    UserService__Url: "http://local-user-service"
+    PostService__Url: "http://local-post-service"
 microservises:
   client:
     image:
@@ -28,6 +37,27 @@ microservises:
       path: /
       port: http
 
+  auth-service:
+    replicaCount: 1
+    migrations:
+      image:
+        name: ms-auth-service-migrator
+      secret: auth-service-secret
+    image:
+      name: ms-auth-service
+    secrets:
+     - auth-service-secret
+    configs:
+     - common
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      path: /api/auth
+      port: http
+
   user-service:
     replicaCount: 2
     migrations:
@@ -36,7 +66,10 @@ microservises:
       secret: user-service-secret
     image:
       name: ms-user-service
-    secret: user-service-secret
+    secrets:
+     - user-service-secret
+    configs:
+     - common
     service:
       ports:
       - name: http
@@ -54,7 +87,10 @@ microservises:
       secret: post-service-secret
     image:
       name: ms-post-service
-    secret: post-service-secret
+    secrets:
+     - post-service-secret
+    configs:
+     - common
     service:
       ports:
       - name: http
@@ -62,4 +98,21 @@ microservises:
         port: 80
     ingress:
       path: /api/posts
+      port: http
+
+  timeline-service:
+    replicaCount: 1
+    image:
+      name: ms-timeline-service
+    secret:
+     - auth-private-secret
+    configs:
+     - common
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      path: /api/timeline
       port: http

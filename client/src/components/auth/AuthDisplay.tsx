@@ -36,7 +36,7 @@ const ProfileDisplay = ({ className }: { className?: string }) => {
 const LoginDisplay = ({ className }: { className?: string }) => {
   
 
-  return (<div className={clsx('flex gap-3', className)}>
+  return (<div className={clsx('flex gap-3 items-center', className)}>
       <SignInLink />
       <SignUpLink className="bg-purple-500/70 hover:bg-purple-500/80 rounded-lg px-1 sm:px-4 py-0 sm:py-1" />
   </div>);

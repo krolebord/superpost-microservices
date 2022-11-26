@@ -1,9 +1,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
-COPY *.csproj ./
-RUN dotnet restore
-COPY . .
-RUN dotnet publish -c release -o /app --no-restore
+ARG service=UserService
+COPY ./${service}/*.csproj ./${service}/
+COPY ./Common/ ./Common/
+RUN dotnet restore ./${service}
+COPY ./${service}/ ./${service}/
+RUN dotnet publish -c release -o /app --no-restore ./${service}
 
 FROM ms-migrator as migrator
 WORKDIR /app

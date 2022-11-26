@@ -49,10 +49,15 @@ spec:
           - containerPort: {{ .containerPort }}
             name: {{ .name }}
           {{- end}}
-          {{- if $value.secret }}
           envFrom:
+            {{- range $value.configs }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}  
+            {{- range $value.secrets }}
             - secretRef:
-                name: {{ $value.secret }}
-          {{- end }}
+                name: {{ . }}
+            {{- end }} 
+
 {{ end }}
 {{ end }}

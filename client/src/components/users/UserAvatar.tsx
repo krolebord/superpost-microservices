@@ -37,7 +37,7 @@ const fontSizes = {
   'lg': 'text-lg'
 }
 
-export const UserAvatar: FC<Props> = ({ userName, size = 'md', className }) => {
+export const UserAvatar: FC<UserAvatarProps> = ({ userName, size = 'md', className }) => {
   const letters = useMemo(() => getAvatarLetters(userName), [userName]);
 
   return (<span className={clsx('inline-flex justify-center rounded-full items-center text-black bg-purple-400', avatarSizes[size], fontSizes[size], className)}>

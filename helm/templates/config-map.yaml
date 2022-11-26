@@ -1,0 +1,18 @@
+{{- $defaults := . -}}
+
+{{- range $index, $config := .Values.configMaps }}
+{{- $val := dict "Values" $config }}
+{{- $defaultsCopy := $defaults | deepCopy }}
+{{- with mergeOverwrite $defaultsCopy $val }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $index }}
+data:
+{{- range $key, $value := $config }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+
+{{ end }}
+{{ end }}

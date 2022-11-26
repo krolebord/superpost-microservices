@@ -1,0 +1,32 @@
+{{- $defaults := . -}}
+
+{{- range $index, $value := .Values.microservises }}
+{{- if $value.service }}
+{{- $_ := set $value "nameOverride" $index }}
+{{- $microservice := dict "Values" $value }}
+{{- $defaultsCopy := $defaults | deepCopy }}
+{{- with mergeOverwrite $defaultsCopy $microservice }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "common.fullname" . }}-virtual
+spec:
+  hosts:
+    - {{ include "common.fullname" . }}
+  http:
+    - route:
+        - destination:
+            host: {{ include "common.fullname" . }}
+      {{- if $value.istio }}
+      timeout: {{ $value.istio.timeout | default "5s" }}
+      {{- if $value.istio.retries }}
+      retries:
+        attempts: {{ $value.istio.retries.attempts | default 3 }}
+        retryOn: {{ $value.istio.retries.retryOn | default "5xx" }}
+        perTryTimeout: {{ $value.istio.retries.perTryTimeout | default "5s" }}
+      {{- end }}
+      {{- end }}
+{{ end }}
+{{ end }}
+{{ end }}

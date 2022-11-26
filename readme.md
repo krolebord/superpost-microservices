@@ -15,11 +15,13 @@
 #### Start minikube
  - `sh init.sh`
 
-or
-
-1. `minikube start --driver=docker`
-2. `minikube addons enable ingress`
-
+#### Install istio
+ - `helm repo add istio https://istio-release.storage.googleapis.com/charts`
+ - `helm repo update`
+ - `kubectl create namespace istio-system`
+ - `helm install istio-base istio/base -n istio-system`
+ - `helm install istiod istio/istiod -n istio-system --wait`
+ - `kubectl label namespace default istio-injection=enabled`
 
 ## Build images
  - `sh build.sh`

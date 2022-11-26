@@ -1,0 +1,25 @@
+{{- $defaults := . -}}
+
+{{- range $index, $value := .Values.microservises }}
+{{- if $value.service }}
+{{- $_ := set $value "nameOverride" $index }}
+{{- $microservice := dict "Values" $value }}
+{{- $defaultsCopy := $defaults | deepCopy }}
+{{- with mergeOverwrite $defaultsCopy $microservice }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ include "common.fullname" . }}-destination
+spec:
+  host: {{ include "common.fullname" . }}
+  trafficPolicy:
+    outlierDetection:
+      consecutive5xxErrors: 5 
+      interval: 10s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 80
+
+{{- end}}
+{{- end}}
+{{- end}}

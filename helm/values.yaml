@@ -57,9 +57,15 @@ microservises:
     ingress:
       path: /api/auth
       port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
 
   user-service:
-    replicaCount: 2
+    replicaCount: 1
     migrations:
       image:
         name: ms-user-service-migrator
@@ -78,9 +84,15 @@ microservises:
     ingress:
       path: /api/users
       port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
 
   post-service:
-    replicaCount: 2
+    replicaCount: 1
     migrations:
       image:
         name: ms-post-service-migrator
@@ -99,6 +111,12 @@ microservises:
     ingress:
       path: /api/posts
       port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
 
   timeline-service:
     replicaCount: 1
@@ -116,3 +134,9 @@ microservises:
     ingress:
       path: /api/timeline
       port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s

@@ -4,6 +4,7 @@ metadata:
   name: user-service-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/auth-url:
 spec:
   rules:
     - http:

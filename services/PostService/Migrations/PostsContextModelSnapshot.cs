@@ -17,7 +17,7 @@ namespace PostService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -32,13 +32,36 @@ namespace PostService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ParentPostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentPostId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("PostService.Models.Post", b =>
+                {
+                    b.HasOne("PostService.Models.Post", "ParentPost")
+                        .WithMany("SubPosts")
+                        .HasForeignKey("ParentPostId");
+
+                    b.Navigation("ParentPost");
+                });
+
+            modelBuilder.Entity("PostService.Models.Post", b =>
+                {
+                    b.Navigation("SubPosts");
                 });
 #pragma warning restore 612, 618
         }

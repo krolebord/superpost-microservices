@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+using Common.Auth;
 using Microsoft.EntityFrameworkCore;
 using PostService.Data;
-using PostService.Dtos;
+using PostService.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +11,7 @@ builder.Services.AddDbContext<PostsContext>(options => {
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuth(builder.Configuration.GetJwtOptions());
 
 var app = builder.Build();
 
@@ -22,23 +23,9 @@ app.UseSwaggerUI();
 
 app.MapHealthChecks("/health");
 
-app.MapGet("/", async (PostsContext context) => {
-    var posts = await context.Posts.ToListAsync();
-    var postDtos = posts.Select(PostDto.FromPost);
-    return Results.Ok(postDtos);
-});
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapGet("/{id:guid}", async ([FromRoute] Guid id, PostsContext context) => {
-    var post = await context.Posts.FirstOrDefaultAsync(x => x.Id == id);
-    if (post is null) return Results.NotFound();
-    return Results.Ok(PostDto.FromPost(post));
-});
-
-app.MapPost("/", async ([FromBody] PostCreateDto postDto, PostsContext context) => {
-    var user = postDto.ToPost();
-    context.Posts.Add(user);
-    await context.SaveChangesAsync();
-    return Results.Ok(user.Id);
-});
+app.MapEndpoints();
 
 app.Run();

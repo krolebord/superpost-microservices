@@ -2,7 +2,12 @@ namespace UserService.Models;
 
 public class User
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
+    public required Guid Id { get; set; }
+    public required string Name { get; set; }
+    public required string Email { get; set; }
+
+    public ICollection<User> Subscribers { get; } = new HashSet<User>();
+    
+    public ICollection<User> SubscribedTo { get; } = new HashSet<User>();
+
 }

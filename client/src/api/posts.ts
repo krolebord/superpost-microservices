@@ -1,22 +1,19 @@
-type Post = {
-  id: string;
-  title: string;
+import { typedFetch } from "./helpers";
+
+type NewPost = {
   content: string;
+  parentPostId?: string;
 }
 
 export const postsApiUrl = "/api/posts";
 
-export const getPosts = () => {
-  return fetch(postsApiUrl).then((res) => res.json()) as Promise<Post[]>;
-}
-
-export const createPost = (post: Omit<Post, 'id'>) => {
-  return fetch(postsApiUrl, {
+export const createPost = (post: NewPost) => {
+  return typedFetch<string>(postsApiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(post),
-  }).then((res) => res.ok ? res.json() : Promise.reject(res)) as Promise<string>;
+  });
 }
 

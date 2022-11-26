@@ -1,15 +1,19 @@
-using Microsoft.AspNetCore.Mvc;
+using Common.Auth;
 using Microsoft.EntityFrameworkCore;
 using UserService.Data;
-using UserService.Dtos;
+using UserService.Endpoints;
+using UserService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHealthChecks();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddAuth(builder.Configuration.GetJwtOptions());
+builder.Services.AddTransient<SubscribersService>();
 builder.Services.AddDbContext<UsersContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
 });
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -21,21 +25,9 @@ app.UseSwaggerUI();
 
 app.MapHealthChecks("/health");
 
-app.MapGet("/{id:guid}", async ([FromRoute] Guid id, UsersContext context) => {
-    var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
-    if (user is null) return Results.NotFound();
-    return Results.Ok(new
-    {
-        user.Id,
-        user.Name
-    });
-});
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapPost("/", async ([FromBody] UserCreateDto userDto, UsersContext context) => {
-    var user = userDto.ToUser();
-    context.Users.Add(user);
-    await context.SaveChangesAsync();
-    return Results.Ok(user.Id);
-});
+app.MapEndpoints();
 
 app.Run();

@@ -17,7 +17,7 @@ namespace UserService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -39,6 +39,40 @@ namespace UserService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UserService.Models.UserSubscription", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SubscribedToId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "SubscribedToId");
+
+                    b.HasIndex("SubscribedToId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("UserService.Models.UserSubscription", b =>
+                {
+                    b.HasOne("UserService.Models.User", "SubscribedTo")
+                        .WithMany()
+                        .HasForeignKey("SubscribedToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserService.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubscribedTo");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

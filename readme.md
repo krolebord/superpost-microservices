@@ -1,7 +1,7 @@
 ## Initial setup
 
 ### Services development
- - dotnet 6
+ - dotnet 7
 
 ### Client development
  - node 16
@@ -39,7 +39,16 @@ or
 
 ---
 
-## Dev nginx
+## Dev
 ```
-docker compose -f dev/docker-compose.nginx.yml up -d
+docker compose -f dev/docker-compose.yml up -d
+```
+
+Run migrations `sh migrations.sh`
+
+Or
+```
+(cd AuthService && dotnet ef database update) &&
+(cd UserService && dotnet ef database update) &&
+(cd PostService && dotnet ef database update)
 ```

@@ -16,4 +16,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Auth\Common.Auth.csproj" />
+    <ProjectReference Include="..\Common\PostService.Models\PostService.Models.csproj" />
+  </ItemGroup>
+
 </Project>

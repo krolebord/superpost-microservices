@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Common.Clients.PostService</AssemblyName>
+    <RootNamespace>Common.Clients.PostService</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Clients\Common.Clients.csproj" />
+    <ProjectReference Include="..\PostService.Models\PostService.Models.csproj" />
+  </ItemGroup>
+
+</Project>

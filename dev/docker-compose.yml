@@ -1,0 +1,19 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "5555:80"
+    volumes:
+       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  postgres:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ms-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+
+volumes:
+  ms-postgres:

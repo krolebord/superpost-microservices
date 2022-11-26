@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 
 type Props = {
   label?: string;
@@ -22,16 +22,13 @@ export const ServiceStatus: FC<Props> = (props) => {
   const { data: ok, isLoading, isError } = useQuery({
     queryKey: ['service-status', healthCheckUrl],
     queryFn: () => getStatus(healthCheckUrl),
-    retry: 2,
-    retryDelay(failureCount, error) {
-      return 1000 * failureCount;
-    },
+    retry: false
   })
 
-  return (<span>
+  return (<span className="inline-flex gap-1">
     {label && <span>{label}</span>}
-    {ok && <span>ok</span>}
-    {isLoading && <span>loading...</span>}
-    {isError && <span>down</span>}
+    {ok && <span>🟢</span>}
+    {isLoading && <span>🟡</span>}
+    {isError && <span>🔴</span>}
   </span>)
 }

@@ -2,9 +2,6 @@ postgresql:
   fullnameOverride: postgres
   auth:
     postgresPassword: "mysecretpassword"
-  image:
-    tag: 15.1
-    repository: postgres
   persistence:
     size: 512Mi
     mountPath: /var/lib/postgresql/data
@@ -27,7 +24,7 @@ configMaps:
 microservises:
   client:
     image:
-      name: ms-client
+      name: mianni/ms-services:client
     service:
       ports:
         - name: http
@@ -41,10 +38,10 @@ microservises:
     replicaCount: 1
     migrations:
       image:
-        name: ms-auth-service-migrator
+        name: mianni/ms-services:auth-migrator
       secret: auth-service-secret
     image:
-      name: ms-auth-service
+      name: mianni/ms-services:auth
     secrets:
      - auth-service-secret
     configs:
@@ -68,10 +65,10 @@ microservises:
     replicaCount: 1
     migrations:
       image:
-        name: ms-user-service-migrator
+        name: mianni/ms-services:user-migrator
       secret: user-service-secret
     image:
-      name: ms-user-service
+      name: mianni/ms-services:user
     secrets:
      - user-service-secret
     configs:
@@ -95,10 +92,10 @@ microservises:
     replicaCount: 1
     migrations:
       image:
-        name: ms-post-service-migrator
+        name: mianni/ms-services:post-migrator
       secret: post-service-secret
     image:
-      name: ms-post-service
+      name: mianni/ms-services:post
     secrets:
      - post-service-secret
     configs:
@@ -121,7 +118,7 @@ microservises:
   timeline-service:
     replicaCount: 1
     image:
-      name: ms-timeline-service
+      name: mianni/ms-services:timeline
     secret:
      - auth-private-secret
     configs:

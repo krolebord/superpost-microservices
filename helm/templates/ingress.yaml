@@ -4,9 +4,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ms-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - http:
+    - host: ms.krolebord.online
+      http:
         paths:
           {{- range $index, $value := .Values.microservises }}
           {{- $_ := set $value "nameOverride" $index }}

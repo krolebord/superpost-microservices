@@ -28,6 +28,8 @@
 
 
 ## Start with helm
+  - `helm repo add bitnami https://charts.bitnami.com/bitnami`
+  - `helm dependency build` 
   - `helm install local helm`
   - `minikube tunnel`
   - `http://localhost`

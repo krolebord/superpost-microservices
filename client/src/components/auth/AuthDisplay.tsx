@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserDisplay } from "../users/UserDisplay";
-import { useAuth } from "./AuthProvider";
+import { useAuth, useAuthActions } from "./hooks";
 
 export const SignInLink = ({ className }: { className?: string }) => {
   const location = useLocation();
@@ -17,7 +17,8 @@ export const SignUpLink = ({ className }: { className?: string }) => {
 
 const ProfileDisplay = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth({ forceUser: true });
+  const { user } = useAuth({ forceUser: true });
+  const { signOut } = useAuthActions();
 
   const onSingOut = () => {
     signOut(() => navigate('/'));

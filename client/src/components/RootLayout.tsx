@@ -5,7 +5,7 @@ import { horizontalPadding, cardHorizontalMargin } from "../common-styles";
 import { MainSection } from "./MainSection";
 import { ServiceStatus } from "./ServiceStatus";
 import { AuthDisplay } from "./auth/AuthDisplay";
-import { useAuth } from "./auth/AuthProvider";
+import { useAuth } from "./auth/hooks";
 
 export const Header = () => {
   const { loading, user } = useAuth();

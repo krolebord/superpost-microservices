@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { isSubscribedQuery, profileQuery, subscribe, unsubscribe } from "../../api/users";
 import { SignInLink } from "../auth/AuthDisplay";
-import { useAuth } from "../auth/AuthProvider";
+import { useAuth } from "../auth/hooks";
 
 type SubscribeButtonProps = {
   userId: string;

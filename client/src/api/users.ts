@@ -1,5 +1,6 @@
 import { QueryClient, QueryOptions } from "@tanstack/react-query";
 import { LoaderFunction, redirect } from "react-router-dom";
+import { authKey } from "./auth";
 import { typedFetch } from "./helpers";
 
 const usersApiUrl = '/api/users'
@@ -23,10 +24,20 @@ export type Profile = {
   subscribedToCount: number;
 }
 
+
+
 export const getMyProfile = () => {
   return typedFetch<Profile>(`${usersApiUrl}/profile/me`)
     .catch(() => Promise.resolve(null));
 };
+
+export const myProfileQuery = ({
+  queryFn: getMyProfile,
+  queryKey: [authKey, 'current-user'],
+  retry: false,
+}) satisfies QueryOptions;
+
+
 
 const getProfile = async (userName: string) => {
   return typedFetch<Profile>(`${usersApiUrl}/profile/${userName}`);

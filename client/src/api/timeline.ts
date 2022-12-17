@@ -1,6 +1,6 @@
 import { QueryClient, QueryOptions } from "@tanstack/react-query";
 import { LoaderFunction, redirect } from "react-router-dom";
-import { authKey } from "../components/auth/AuthProvider";
+import { authKey } from "./auth";
 import { typedFetch } from "./helpers";
 import { User } from "./users";
 

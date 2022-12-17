@@ -1,5 +1,7 @@
 const authApiUrl = '/api/auth';
 
+export const authKey = 'auth';
+
 export type SignInCredentials = {
   userNameOrEmail: string;
   password: string;

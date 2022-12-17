@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { InputHTMLAttributes } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
+import { useAuth, useAuthActions } from "./hooks";
 
 type AuthInputProps = {
   id: string;
@@ -26,7 +26,8 @@ const AuthInput = (props: AuthInputProps) => {
 export const SignInForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn, loading } = useAuth();
+  const { loading } = useAuth();
+  const { signIn } = useAuthActions();
 
   const from = location.state?.from?.pathname || "/home";
 
@@ -71,7 +72,8 @@ export const SignInForm = () => {
 export const SignUpForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { signUp, loading } = useAuth();
+  const { loading } = useAuth();
+  const { signUp } = useAuthActions();
 
   const from = location.state?.from?.pathname || '/home';
 

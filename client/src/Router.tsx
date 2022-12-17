@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
 import { profileLoader, profileQuery } from "./api/users";
 import { SignInForm, SignUpForm } from "./components/auth/AuthForms";
 import { AuthLayout } from "./components/auth/AuthLayout";
-import { RequireAuth } from "./components/auth/AuthProvider";
+import { RequireAuth } from "./components/auth/RequireAuth";
 import { NotFound } from "./components/NotFound";
 import { RootLayout } from "./components/RootLayout";
 import { PostList } from "./components/posts/PostList";

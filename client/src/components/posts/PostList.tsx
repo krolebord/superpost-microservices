@@ -10,8 +10,8 @@ type PostListProps = {
 
 export const PostList: FC<PostListProps> = ({ posts, className }) => {
   return (<div className={clsx('flex flex-col gap-2', className)}>
-    {posts.map((post) =>
-      <PostCard post={post} />
+    {posts.map(post =>
+      <PostCard key={post.id} post={post} />
     )}
   </div>);
 }

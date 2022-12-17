@@ -15,14 +15,16 @@ export const PostPage = () => {
   });
 
   return (<div className={cardHorizontalMargin}>
-    <div className="mx-2 xs:mx-3 sm:mx-4 md:mx-8 lg:mx-12">
-      {post.parentPost && <PostCard post={post.parentPost} />}
+    <div className="mx-2 xs:mx-3 sm:mx-4 md:mx-8 lg:mx-12 flex flex-col gap-2">
+      {post.parentPosts && post.parentPosts.map(parentPost =>
+        <PostCard key={parentPost.id} post={parentPost} />
+      )}
     </div>
     <PostCard className="my-2" post={{...post, subPostsCount: post.subPosts.length }} />
     <div className="mx-2 xs:mx-3 sm:mx-4 md:mx-8 lg:mx-12 flex flex-col gap-2">
       <PostEditor parentPostId={post.id} />
       {post.subPosts.map(subPost =>
-        <PostCard post={subPost} />
+        <PostCard key={subPost.id} post={subPost} />
       )}
     </div>
   </div>);

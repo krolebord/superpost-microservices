@@ -13,12 +13,65 @@ public static class PostEndpoints
         [FromRoute] Guid id,
         PostsContext context)
     {
-        var post = await context.Posts
-            .Include(x => x.SubPosts)
-            .Select(PostSelectors.FullPostDto)
-            .FirstOrDefaultAsync(x => x.Id == id);
-        if (post is null) return Results.NotFound();
-        return Results.Ok(post);
+        var posts = await context.PostDtos
+            .FromSql($"""
+                WITH RECURSIVE post AS (
+                    SELECT *
+                    FROM "Posts"
+                    WHERE "Id" = {id} or "ParentPostId" = {id}
+                    
+                    UNION DISTINCT
+                    SELECT parent.*
+                    FROM "Posts" parent
+                        INNER JOIN post o ON o."ParentPostId" = parent."Id"
+                )
+                SELECT *, (SELECT count("Id") from "Posts" where "ParentPostId" = post."Id") as "SubPostsCount" FROM post
+                ORDER BY "CreatedAt";
+            """)
+            .AsNoTracking()
+            .ToListAsync();
+
+        if (!posts.Any())
+        {
+            return Results.NotFound();
+        }
+
+        List<PostDto> parentPosts = new();
+        PostDto? targetPost = null;
+        List<PostDto> subPosts = new();
+
+        foreach (var post in posts)
+        {
+            if (post.Id == id)
+            {
+                targetPost = post;
+            }
+            else if (targetPost is null)
+            {
+                parentPosts.Add(post);
+            }
+            else
+            {
+                subPosts.Add(post);
+            }
+        }
+
+        if (targetPost is null)
+        {
+            throw new Exception();
+        }
+
+        FullPostDto dto = new()
+        {
+            Id = id,
+            UserId = targetPost.UserId,
+            Content = targetPost.Content,
+            CreatedAt = targetPost.CreatedAt,
+            ParentPosts = parentPosts,
+            SubPosts = subPosts
+        };
+        
+        return Results.Ok(dto);
     }
 
     public static async Task<IResult> GetLastPosts(

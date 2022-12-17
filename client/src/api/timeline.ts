@@ -18,7 +18,7 @@ export type FullTimelinePost = {
   id: string;
   content: string;
   createdAt: string;
-  parentPost?: TimelinePost;
+  parentPosts?: TimelinePost[];
   subPosts: TimelinePost[];
   user: User;
 }

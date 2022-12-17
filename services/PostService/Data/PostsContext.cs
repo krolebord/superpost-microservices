@@ -6,7 +6,9 @@ namespace PostService.Data;
 public class PostsContext : DbContext
 {
     public DbSet<Post> Posts { get; set; } = null!;
-    
+
+    public DbSet<PostDto> PostDtos { get; set; } = null!;
+
     public PostsContext()
     {}
 
@@ -23,6 +25,10 @@ public class PostsContext : DbContext
                 .WithMany(x => x.SubPosts)
                 .HasForeignKey(x => x.ParentPostId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<PostDto>(dtoBuilder => {
+            dtoBuilder.HasNoKey();
         });
     }
 }

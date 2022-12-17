@@ -10,7 +10,7 @@ public record FullPostDto
     
     public required DateTime CreatedAt { get; init; }
     
-    public required PostDto? ParentPost { get; init; }
+    public required IEnumerable<PostDto> ParentPosts { get; init; }
 
     public required IEnumerable<PostDto> SubPosts { get; init; }
 }

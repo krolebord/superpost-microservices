@@ -36,7 +36,7 @@ export const Footer = () => {
         <ServiceStatus label="Auth: " healthCheckUrl="/api/auth/health" />
         <ServiceStatus label="Posts: " healthCheckUrl="/api/posts/health" />
         <ServiceStatus label="Users: " healthCheckUrl="/api/users/health" />
-        <ServiceStatus label="Users: " healthCheckUrl="/api/timeline/health" />
+        <ServiceStatus label="Timeline: " healthCheckUrl="/api/timeline/health" />
       </span>}
       <button className="whitespace-nowrap" onClick={() => setShowStatus(x => !x)} >{showStatus ? 'Hide status' : 'Show status'}</button>
     </footer>
@@ -52,17 +52,3 @@ export const RootLayout: FC<{ children?: ReactNode }> = ({ children }) => {
     <Footer />
   </div>);
 };
-
-// TODO
-// const t = () => <div className={cardHorizontalMargin}>
-// <div className="px-6">
-//   <PostCard post={postA} />
-// </div>
-// <PostCard post={megaPost} className="my-2" />
-// <div className="flex flex-col gap-2 px-6">
-//   <PostEditor />
-//   {megaPost.subPosts.map(post => (<>
-//     <PostCard post={post} />
-//   </>))}
-// </div>
-// </div>;

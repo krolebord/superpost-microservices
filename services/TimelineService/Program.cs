@@ -89,11 +89,10 @@ app.MapGet("/post/{postId:guid}", async (
 
     var userIds = post.SubPosts
         .Select(x => x.UserId)
-        .Append(post.UserId);
-    if (post.ParentPost is not null)
-    {
-        userIds = userIds.Append(post.ParentPost.UserId);
-    }
+        .Append(post.UserId)
+        .Concat(post.ParentPosts.Select(x => x.UserId))
+        .ToHashSet();
+    
     var users = (await userServiceClient.GetUsers(userIds))
         .ToDictionary(x => x.Id);
 
@@ -103,8 +102,8 @@ app.MapGet("/post/{postId:guid}", async (
         Content = post.Content,
         CreatedAt = post.CreatedAt,
         User = users[post.UserId].ToUserDto(),
-        ParentPost = post.ParentPost is not null
-            ? UserPostMapper.CreateUserPostDto(post.ParentPost, users[post.ParentPost.UserId])
+        ParentPosts = post.ParentPosts.Any()
+            ? post.ParentPosts.Select(parentPost => UserPostMapper.CreateUserPostDto(parentPost, users[parentPost.UserId]))
             : null,
         SubPosts = post.SubPosts
             .Select(x => UserPostMapper.CreateUserPostDto(x, users[x.UserId]))

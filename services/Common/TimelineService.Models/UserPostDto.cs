@@ -28,7 +28,7 @@ public class FullUserPostDto
     
     public required DateTime CreatedAt { get; init; }
     
-    public required UserPostDto? ParentPost { get; init; }
+    public required IEnumerable<UserPostDto>? ParentPosts { get; init; }
     
     public required IEnumerable<UserPostDto> SubPosts { get; init; }
     

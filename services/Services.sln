@@ -13,17 +13,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Clients", "Common\Common.Clients\Common.Clients.csproj", "{79E0FF35-5D48-44F4-9655-0B29A0B03DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Client", "common\UserService.Client\UserService.Client.csproj", "{A6AAA5DF-51EE-4A0F-9A95-FD4A2564F89D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Client", "Common\UserService.Client\UserService.Client.csproj", "{A6AAA5DF-51EE-4A0F-9A95-FD4A2564F89D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Auth", "common\Common.Auth\Common.Auth.csproj", "{BFE2C17C-2430-40F9-869B-5A78B0A8D403}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Auth", "Common\Common.Auth\Common.Auth.csproj", "{BFE2C17C-2430-40F9-869B-5A78B0A8D403}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimelineService", "TimelineService\TimelineService.csproj", "{1B1F6BBA-3723-495B-89CB-F70B3C775E58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService.Client", "common\PostService.Client\PostService.Client.csproj", "{71DE595D-E43B-4D1C-B568-6B9596A84F73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService.Client", "Common\PostService.Client\PostService.Client.csproj", "{71DE595D-E43B-4D1C-B568-6B9596A84F73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService.Models", "common\PostService.Models\PostService.Models.csproj", "{00F17EC9-C90F-4A24-B181-8832FC6BCDC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostService.Models", "Common\PostService.Models\PostService.Models.csproj", "{00F17EC9-C90F-4A24-B181-8832FC6BCDC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimelineService.Models", "common\TimelineService.Models\TimelineService.Models.csproj", "{2F207A41-566A-417F-A28B-97DDC2231BC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimelineService.Models", "Common\TimelineService.Models\TimelineService.Models.csproj", "{2F207A41-566A-417F-A28B-97DDC2231BC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Models", "Common\UserService.Models\UserService.Models.csproj", "{FC6F304F-0270-4C17-9C0D-A1B93C8BA697}"
 EndProject

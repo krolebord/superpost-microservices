@@ -7,7 +7,7 @@ RUN dotnet restore ./${service}
 COPY ./${service}/ ./${service}/
 RUN dotnet publish -c release -o /app --no-restore ./${service}
 
-FROM ms-migrator as migrator
+FROM mianni/ms-services:migrator as migrator
 WORKDIR /app
 COPY --from=build /app/UserService.dll ./
 ENTRYPOINT ["dotnet", "Migrator.dll", "--dll", "UserService.dll"]

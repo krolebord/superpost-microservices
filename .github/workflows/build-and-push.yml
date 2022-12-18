@@ -21,55 +21,116 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
 
+  publish-migrator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:migrator
+          context: ./services/Migrator
+          file: ./services/Migrator/Dockerfile
+
+
   publish-auth-service:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./.github/actions/build-and-push-service
+      - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
           registry_password: ${{secrets.DOCKERHUB_TOKEN}}
           tags: mianni/ms-services:auth
-          migrator_tags: mianni/ms-services:auth-migrator
-          name: AuthService
+          context: ./services
+          file: ./services/AuthService/Dockerfile
+
+  publish-auth-service-migrator:
+    runs-on: ubuntu-latest
+    needs: publish-migrator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:auth-migrator
+          context: ./services
+          file: ./services/AuthService/Dockerfile
+          target: migrator
+
 
   publish-user-service:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./.github/actions/build-and-push-service
+      - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
           registry_password: ${{secrets.DOCKERHUB_TOKEN}}
           tags: mianni/ms-services:user
-          migrator_tags: mianni/ms-services:user-migrator
-          name: UserService
+          context: ./services
+          file: ./services/UserService/Dockerfile
+  
+  publish-user-service-migrator:
+    runs-on: ubuntu-latest
+    needs: publish-migrator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:user-migrator
+          context: ./services
+          file: ./services/UserService/Dockerfile
+          target: migrator
+
 
   publish-post-service:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./.github/actions/build-and-push-service
+      - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
           registry_password: ${{secrets.DOCKERHUB_TOKEN}}
           tags: mianni/ms-services:post
-          migrator_tags: mianni/ms-services:post-migrator
-          name: PostService
+          context: ./services
+          file: ./services/PostService/Dockerfile
+
+  publish-post-service-migrator:
+    runs-on: ubuntu-latest
+    needs: publish-migrator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:post-migrator
+          context: ./services
+          file: ./services/PostService/Dockerfile
+          target: migrator
+
 
   publish-timeline-service:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./.github/actions/build-and-push-service
+      - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
           registry_password: ${{secrets.DOCKERHUB_TOKEN}}
           tags: mianni/ms-services:timeline
-          migrator_tags: mianni/ms-services:timeline-migrator
-          name: TimelineService
-  
+          context: ./services
+          file: ./services/TimelineService/Dockerfile

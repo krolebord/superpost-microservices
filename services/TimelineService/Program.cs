@@ -46,7 +46,9 @@ app.MapGet("/home", [Authorize] async (
 
     var posts = await postServiceClient.GetLastPosts(fromUsers: users.Keys);
 
-    var result = posts.Select(post => UserPostMapper.CreateUserPostDto(post, users[post.UserId]));
+    var result = posts
+        .Where(post => users.ContainsKey(post.UserId))
+        .Select(post => UserPostMapper.CreateUserPostDto(post, users[post.UserId]));
     return Results.Ok(result);
 });
 
@@ -60,7 +62,9 @@ app.MapGet("/new", async (
     var users = (await userServiceClient.GetUsers(userIds))
         .ToDictionary(x => x.Id);
     
-    var result = posts.Select(post => UserPostMapper.CreateUserPostDto(post, users[post.UserId]));
+    var result = posts
+        .Where(post => users.ContainsKey(post.UserId))
+        .Select(post => UserPostMapper.CreateUserPostDto(post, users[post.UserId]));
     return Results.Ok(result);
 });
 
@@ -96,6 +100,11 @@ app.MapGet("/post/{postId:guid}", async (
     var users = (await userServiceClient.GetUsers(userIds))
         .ToDictionary(x => x.Id);
 
+    if (!users.ContainsKey(post.UserId))
+    {
+        return Results.NotFound();
+    }
+
     var result = new FullUserPostDto
     {
         Id = post.Id,
@@ -103,9 +112,12 @@ app.MapGet("/post/{postId:guid}", async (
         CreatedAt = post.CreatedAt,
         User = users[post.UserId].ToUserDto(),
         ParentPosts = post.ParentPosts.Any()
-            ? post.ParentPosts.Select(parentPost => UserPostMapper.CreateUserPostDto(parentPost, users[parentPost.UserId]))
+            ? post.ParentPosts
+                .Where(parentPost => users.ContainsKey(parentPost.UserId))
+                .Select(parentPost => UserPostMapper.CreateUserPostDto(parentPost, users[parentPost.UserId]))
             : null,
         SubPosts = post.SubPosts
+            .Where(x => users.ContainsKey(x.UserId))
             .Select(x => UserPostMapper.CreateUserPostDto(x, users[x.UserId]))
     };
     

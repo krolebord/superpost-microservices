@@ -1,9 +1,9 @@
 name: Build and Push
 
 on:
-  label:
-    types:
-      - created
+  push:
+    tags:
+      - '*'
 
 jobs:
   publish-client:

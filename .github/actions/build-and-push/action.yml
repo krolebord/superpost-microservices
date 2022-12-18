@@ -5,11 +5,9 @@ inputs:
   registry_username:
     description: “Username for image registry”
     required: true
-    default: ${{secrets.DOCKERHUB_USERNAME}}
   registry_password:
     description: “Password for image registry”
     required: true
-    default: ${{secrets.DOCKERHUB_TOKEN}}
   tags:
     description: “Tags for image”
     required: true

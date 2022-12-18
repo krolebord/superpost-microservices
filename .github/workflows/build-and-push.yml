@@ -18,7 +18,6 @@ jobs:
           tags: mianni/ms-services:client
           context: ./client
           file: ./client/Dockerfile
-          target: migrator
 
   build-migrator:
     runs-on: ubuntu-latest

@@ -22,7 +22,6 @@ inputs:
   target:
     description: “Target for image”
     required: false
-    default: “”
 
 runs:
   using: "composite"

@@ -1,0 +1,46 @@
+name: "Build and Publish to Docker"
+description: "Pushes built artifacts to Docker"
+
+inputs:
+  registry_username:
+    description: “Username for image registry”
+    required: true
+    default: ${{secrets.DOCKERHUB_USERNAME}}
+  registry_password:
+    description: “Password for image registry”
+    required: true
+    default: ${{secrets.DOCKERHUB_TOKEN}}
+  tags:
+    description: “Tags for image”
+    required: true
+  context:
+    description: “Context for image”
+    required: true
+    default: “.”
+  file:
+    description: “Dockerfile for image”
+    required: true
+    default: “./Dockerfile”
+  target:
+    description: “Target for image”
+    required: false
+    default: “”
+
+runs:
+  using: "composite"
+  steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{inputs.registry_username}}
+          password: ${{inputs.registry_password}}
+      - uses: docker/setup-buildx-action@v2
+      - uses: docker/build-push-action@v3
+        with:
+          context: ${{inputs.context}}
+          file: ${{inputs.file}}
+          push: true
+          tags: ${{inputs.tags}}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          target: ${{inputs.target}}

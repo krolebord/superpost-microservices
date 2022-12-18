@@ -30,12 +30,12 @@ runs:
       - uses: docker/build-push-action@v3
         with:
           context: ./services
-          file: ./services/${inputs.name}/Dockerfile
+          file: ./services/${{inputs.name}}/Dockerfile
           push: true
           tags: ${{inputs.tags}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          
+
       - name: Build migrator base
         if: ${{inputs.migrator_tags}}
         uses: docker/build-push-action@v3
@@ -52,7 +52,7 @@ runs:
         with:
           tags: ${{inputs.migrator_tags}}
           context: ./services
-          file: ./services/${inputs.name}/Dockerfile
+          file: ./services/${{inputs.name}}/Dockerfile
           push: true
           target: migrator
           cache-from: type=gha

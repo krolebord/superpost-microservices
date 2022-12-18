@@ -75,7 +75,9 @@ jobs:
           context: ./services
           file: ./services/AuthService/Dockerfile
           target: migrator
-          before_build: docker load -i /tmp/migrator.tar
+          before_build: | 
+            docker load -i /tmp/migrator.tar
+            docker buildx ls -a
 
 
   publish-user-service:

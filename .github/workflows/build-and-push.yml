@@ -67,8 +67,6 @@ jobs:
         with:
           name: migrator
           path: /tmp
-      - name: Load artifact
-        run: docker load -i /tmp/migrator.tar
       - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
@@ -77,6 +75,7 @@ jobs:
           context: ./services
           file: ./services/AuthService/Dockerfile
           target: migrator
+          before_build: docker load -i /tmp/migrator.tar
 
 
   publish-user-service:
@@ -103,8 +102,6 @@ jobs:
         with:
           name: migrator
           path: /tmp
-      - name: Load artifact
-        run: docker load -i /tmp/migrator.tar
       - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
@@ -113,6 +110,7 @@ jobs:
           context: ./services
           file: ./services/UserService/Dockerfile
           target: migrator
+          before_build: docker load -i /tmp/migrator.tar
 
 
   publish-post-service:
@@ -139,8 +137,6 @@ jobs:
         with:
           name: migrator
           path: /tmp
-      - name: Load artifact
-        run: docker load -i /tmp/migrator.tar
       - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
@@ -149,6 +145,7 @@ jobs:
           context: ./services
           file: ./services/PostService/Dockerfile
           target: migrator
+          before_build: docker load -i /tmp/migrator.tar
 
 
   publish-timeline-service:

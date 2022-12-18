@@ -44,6 +44,7 @@ runs:
           context: ./services/Migrator
           file: ./services/Migrator/Dockerfile
           push: false
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: List images

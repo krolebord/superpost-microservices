@@ -40,12 +40,15 @@ runs:
         if: ${{inputs.migrator_tags}}
         uses: docker/build-push-action@v3
         with:
-          tags: ms-migrator
+          tags: ms-migrator:latest
           context: ./services/Migrator
           file: ./services/Migrator/Dockerfile
           push: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - name: List images
+        shell: bash
+        run: docker image ls -a
       - name: Build migrator
         if: ${{inputs.migrator_tags}}
         uses: docker/build-push-action@v3

@@ -8,160 +8,68 @@ on:
       - '*'
 
 jobs:
-  # publish-client:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/build-and-push
-  #       with:
-  #         registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-  #         registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-  #         tags: mianni/ms-services:client
-  #         context: ./client
-  #         file: ./client/Dockerfile
-
-  build-migrator:
+  publish-client:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Build Frontend
-        uses: docker/build-push-action@v3
-        with:
-          tags: ms-migrator
-          context: ./services/Migrator
-          file: ./services/Migrator/Dockerfile
-          push: false
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/migrator.tar
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: migrator
-          path: /tmp/migrator.tar
-
-
-  # publish-auth-service:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/build-and-push
-  #       with:
-  #         registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-  #         registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-  #         tags: mianni/ms-services:auth
-  #         context: ./services
-  #         file: ./services/AuthService/Dockerfile
-
-  publish-auth-service-migrator:
-    runs-on: ubuntu-latest
-    needs: build-migrator
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: migrator
-          path: /tmp
       - uses: ./.github/actions/build-and-push
         with:
           registry_username: ${{secrets.DOCKERHUB_USERNAME}}
           registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-          tags: mianni/ms-services:auth-migrator
-          context: ./services
-          file: ./services/AuthService/Dockerfile
-          target: migrator
-          before_build: | 
-            docker load -i /tmp/migrator.tar
-            docker buildx ls
-            docker image ls -a
+          tags: mianni/ms-services:client
+          context: ./client
+          file: ./client/Dockerfile
 
+  publish-auth-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push-service
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:auth
+          migrator_tags: mianni/ms-services:auth-migrator
+          name: AuthService
 
-  # publish-user-service:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/build-and-push
-  #       with:
-  #         registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-  #         registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-  #         tags: mianni/ms-services:user
-  #         context: ./services
-  #         file: ./services/UserService/Dockerfile
+  publish-user-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push-service
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:user
+          migrator_tags: mianni/ms-services:user-migrator
+          name: UserService
+
+  publish-post-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push-service
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:post
+          migrator_tags: mianni/ms-services:post-migrator
+          name: PostService
+
+  publish-timeline-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/build-and-push-service
+        with:
+          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
+          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
+          tags: mianni/ms-services:timeline
+          migrator_tags: mianni/ms-services:timeline-migrator
+          name: TimelineService
   
-  publish-user-service-migrator:
-    runs-on: ubuntu-latest
-    needs: build-migrator
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: migrator
-          path: /tmp
-      - uses: ./.github/actions/build-and-push
-        with:
-          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-          tags: mianni/ms-services:user-migrator
-          context: ./services
-          file: ./services/UserService/Dockerfile
-          target: migrator
-          before_build: docker load -i /tmp/migrator.tar
-
-
-  # publish-post-service:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/build-and-push
-  #       with:
-  #         registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-  #         registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-  #         tags: mianni/ms-services:post
-  #         context: ./services
-  #         file: ./services/PostService/Dockerfile
-
-  publish-post-service-migrator:
-    runs-on: ubuntu-latest
-    needs: build-migrator
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: migrator
-          path: /tmp
-      - uses: ./.github/actions/build-and-push
-        with:
-          registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-          registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-          tags: mianni/ms-services:post-migrator
-          context: ./services
-          file: ./services/PostService/Dockerfile
-          target: migrator
-          before_build: docker load -i /tmp/migrator.tar
-
-
-  # publish-timeline-service:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/build-and-push
-  #       with:
-  #         registry_username: ${{secrets.DOCKERHUB_USERNAME}}
-  #         registry_password: ${{secrets.DOCKERHUB_TOKEN}}
-  #         tags: mianni/ms-services:timeline
-  #         context: ./services
-  #         file: ./services/TimelineService/Dockerfile

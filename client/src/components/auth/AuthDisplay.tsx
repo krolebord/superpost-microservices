@@ -15,7 +15,7 @@ export const SignUpLink = ({ className }: { className?: string }) => {
   return <Link to={'/sign-up'} state={{ from }} className={className} >Sign up</Link>;
 };
 
-const ProfileDisplay = ({ className }: { className?: string }) => {
+export const ProfileDisplay = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
   const { user } = useAuth({ forceUser: true });
   const { signOut } = useAuthActions();
@@ -34,23 +34,9 @@ const ProfileDisplay = ({ className }: { className?: string }) => {
   </div>);
 };
 
-const LoginDisplay = ({ className }: { className?: string }) => {
-  
-
+export const LoginDisplay = ({ className }: { className?: string }) => {
   return (<div className={clsx('flex gap-3 items-center', className)}>
       <SignInLink />
       <SignUpLink className="bg-purple-500/70 hover:bg-purple-500/80 rounded-lg px-1 sm:px-4 py-0 sm:py-1" />
   </div>);
-}
-
-export const AuthDisplay = ({ className }: { className?: string }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <></>;
-  }
-
-  return (<>
-    {user ? <ProfileDisplay className={className} /> : <LoginDisplay className={className} />}
-  </>);
 }

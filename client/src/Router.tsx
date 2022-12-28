@@ -12,6 +12,17 @@ import { homeTimelineLoader, newTimelineLoader, postTimelineLoader } from "./api
 import { PostPage } from "./components/posts/PostPage";
 import { HomeTimelinePage, NewTimelinePage } from "./components/timeline/TimelinePages";
 
+const unauthorizedRoutes: RouteObject[] = [
+  {
+    path: "/sign-in",
+    element: <SignInForm />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUpForm />,
+  }
+];
+
 const authenticatedRoutes: RouteObject[] = [
   {
     path: '/',
@@ -48,16 +59,7 @@ export const router = createBrowserRouter([
       {
         id: 'auth',
         element: <AuthLayout />,
-        children: [
-          {
-            path: "/sign-in",
-            element: <SignInForm />,
-          },
-          {
-            path: "/sign-up",
-            element: <SignUpForm />,
-          },
-        ]
+        children: unauthorizedRoutes
       },
       {
         id: 'authenticated',

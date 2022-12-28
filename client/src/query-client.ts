@@ -4,7 +4,8 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
-      networkMode: 'always'
+      networkMode: 'always',
+      staleTime: 2 * 1000
     }
   }
 });

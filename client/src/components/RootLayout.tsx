@@ -1,11 +1,13 @@
 import clsx from "clsx";
 import { FC, ReactNode, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { horizontalPadding, cardHorizontalMargin } from "../common-styles";
+import { horizontalPadding } from "../common-styles";
 import { MainSection } from "./MainSection";
 import { ServiceStatus } from "./ServiceStatus";
-import { AuthDisplay } from "./auth/AuthDisplay";
 import { useAuth } from "./auth/hooks";
+import { Authorized } from "./auth/Authorized";
+import { LoginDisplay, ProfileDisplay } from "./auth/AuthDisplay";
+import { Notifications } from "./notifications/Notifications";
 
 export const Header = () => {
   const { loading, user } = useAuth();
@@ -22,7 +24,13 @@ export const Header = () => {
           <NavLink className={({isActive}) => isActive ? 'text-purple-400' : 'text-white'} to="/new">New</NavLink>
         </>}
       </nav>
-      <AuthDisplay className="justify-self-end" />
+      <div className="justify-self-end flex flex-row gap-2 items-center">
+        <Authorized authorized={<Notifications />} />
+        <Authorized
+          authorized={<ProfileDisplay />}
+          unauthorized={<LoginDisplay />}
+        />
+      </div>
     </header>
   );
 };

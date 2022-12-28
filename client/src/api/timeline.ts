@@ -2,7 +2,7 @@ import { QueryClient, QueryOptions } from "@tanstack/react-query";
 import { LoaderFunction, redirect } from "react-router-dom";
 import { authKey } from "./auth";
 import { typedFetch } from "./helpers";
-import { User } from "./users";
+import { User, authenticatedLoader } from "./users";
 
 const timelineApiUrl = '/api/timeline';
 
@@ -33,10 +33,10 @@ export const homeTimelineQuery = () => ({
 });
 
 export const homeTimelineLoader = (client: QueryClient) => 
-  (async () => {
+  authenticatedLoader(client, async () => {
     const query = homeTimelineQuery();
     return client.getQueryData(query.queryKey) as TimelinePost[] || await client.fetchQuery(query);
-  }) satisfies LoaderFunction;
+  });
 
 
 
@@ -50,10 +50,10 @@ export const newTimelineQuery = () => ({
 });
 
 export const newTimelineLoader = (client: QueryClient) => 
-  (async () => {
+  authenticatedLoader(client, async () => {
     const query = newTimelineQuery();
     return client.getQueryData(query.queryKey) as TimelinePost[] || await client.fetchQuery(query);
-  }) satisfies LoaderFunction;
+  });
 
 
 
@@ -78,10 +78,10 @@ export const postTimelineQuery = (postId: string) => ({
 });
 
 export const postTimelineLoader = (client: QueryClient) => 
-  (async ({ params }) => {
+  authenticatedLoader(client, async ({ params }) => {
     if (!params.postId) {
       return redirect('/404');
     }
     const query = postTimelineQuery(params.postId);
     return client.getQueryData(query.queryKey) as FullTimelinePost || await client.fetchQuery(query);
-  }) satisfies LoaderFunction;
+  });

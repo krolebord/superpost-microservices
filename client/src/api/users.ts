@@ -1,4 +1,4 @@
-import { QueryClient, QueryOptions } from "@tanstack/react-query";
+import { FetchQueryOptions, QueryClient, QueryOptions } from "@tanstack/react-query";
 import { LoaderFunction, redirect } from "react-router-dom";
 import { authKey } from "./auth";
 import { typedFetch } from "./helpers";
@@ -34,9 +34,17 @@ export const getMyProfile = () => {
 export const myProfileQuery = ({
   queryFn: getMyProfile,
   queryKey: [authKey, 'current-user'],
-  retry: false,
-}) satisfies QueryOptions;
+  staleTime: 60 * 1000
+}) satisfies FetchQueryOptions;
 
+
+export const authenticatedLoader = <TLoader extends LoaderFunction>(client: QueryClient, loader: TLoader): LoaderFunction => async (args) => {
+  const user = await client.getQueryData(myProfileQuery.queryKey) ?? await client.fetchQuery(myProfileQuery);
+  if (!user) {
+    return redirect('/sign-up');
+  }
+  return await loader(args);
+}
 
 
 const getProfile = async (userName: string) => {
@@ -49,13 +57,13 @@ export const profileQuery = (userId: string) => ({
 }) satisfies QueryOptions;
 
 export const profileLoader = (client: QueryClient) => 
-  (async ({ params }) => {
+  authenticatedLoader(client, async ({ params }) => {
     if (!params.userId) {
       return redirect('/404');
     }
     const query = profileQuery(params.userId);
     return client.getQueryData(query.queryKey) as Profile || await client.fetchQuery(query);
-  }) satisfies LoaderFunction;
+  });
 
 
 

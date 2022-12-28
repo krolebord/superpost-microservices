@@ -12,6 +12,7 @@ public static class AddEndpointsExtensions
         app.MapPost("/", UserEndpoints.CreateUser);
         
         app.MapGet("/subscriptions/{userId:guid}", SubscribersEndpoints.GetUserSubscriptions);
+        app.MapGet("/subscribers/{userId:guid}", SubscribersEndpoints.GetUserSubscribers);
         app.MapPost("/subscribe", SubscribersEndpoints.SubscribeCurrentUserTo);
         app.MapPost("/unsubscribe", SubscribersEndpoints.UnsubscribeCurrentUserFrom);
         app.MapGet("/is-subscribed-to/{userId:guid}", SubscribersEndpoints.CheckIfCurrentUserIsSubscribedTo)

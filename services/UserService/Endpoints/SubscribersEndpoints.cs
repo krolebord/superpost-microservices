@@ -21,6 +21,19 @@ public static class SubscribersEndpoints
 
         return Results.Ok(subscribedTo);
     }
+    
+    public static async Task<IResult> GetUserSubscribers(
+        [FromRoute] Guid userId,
+        UsersContext context)
+    {
+        var subscriberIds = await context.Users
+            .Where(x => x.Id == userId)
+            .SelectMany(x => x.Subscribers)
+            .Select(UserSelectors.UserDto)
+            .ToListAsync();
+
+        return Results.Ok(subscriberIds);
+    }
 
     public static async Task<IResult> CheckIfCurrentUserIsSubscribedTo(
         [FromRoute] Guid userId,

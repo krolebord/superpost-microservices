@@ -5,22 +5,24 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+  
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.Auth\Common.Auth.csproj" />
     <ProjectReference Include="..\Common\Common.Messaging\Common.Messaging.csproj" />
     <ProjectReference Include="..\Common\NotifierService.Models\NotifierService.Models.csproj" />
     <ProjectReference Include="..\Common\PostService.Models\PostService.Models.csproj" />
+    <ProjectReference Include="..\Common\UserService.Client\UserService.Client.csproj" />
   </ItemGroup>
 
 </Project>

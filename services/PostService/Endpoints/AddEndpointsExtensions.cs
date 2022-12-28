@@ -1,3 +1,7 @@
+using Common.Messaging.Interfaces;
+using Common.Messaging.Options;
+using NotifierService.Models;
+
 namespace PostService.Endpoints;
 
 public static class AddEndpointsExtensions

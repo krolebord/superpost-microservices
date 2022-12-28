@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Common.Auth;
+using Common.Messaging.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostService.Data;
@@ -103,7 +104,8 @@ public static class PostEndpoints
     public static async Task<IResult> CreateUserPost(
         [FromBody] PostCreateDto postDto,
         ClaimsPrincipal user,
-        PostsContext context)
+        PostsContext context,
+        IMessagePublisher publisher)
     {
         var post = postDto.ToPost(
             Guid.NewGuid(),
@@ -112,6 +114,14 @@ public static class PostEndpoints
         );
         context.Posts.Add(post);
         await context.SaveChangesAsync();
+        
+        publisher.PublishEvent<PostCreatedEto>(new()
+        {
+            PostId = post.Id,
+            AuthorId = post.UserId,
+            CreatedAt = post.CreatedAt
+        }, $"event.post.create.${post.Id}");
+
         return Results.Ok(post.Id);
     }
 }

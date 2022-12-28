@@ -15,5 +15,15 @@ services:
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
 
+  rabbitmq:
+    image: rabbitmq:3.8.19-management
+    restart: on-failure
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=mysecretpassword
+
 volumes:
   ms-postgres:

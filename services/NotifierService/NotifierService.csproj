@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Auth\Common.Auth.csproj" />
+    <ProjectReference Include="..\Common\Common.Messaging\Common.Messaging.csproj" />
+    <ProjectReference Include="..\Common\NotifierService.Models\NotifierService.Models.csproj" />
+  </ItemGroup>
+
+</Project>

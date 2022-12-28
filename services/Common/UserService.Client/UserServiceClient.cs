@@ -20,6 +20,11 @@ public class UserServiceClient : ServiceClientBase
         return (await httpClient.GetFromJsonAsync<ICollection<UserDto>>($"subscriptions/{userId}"))!;
     }
 
+    public async Task<ICollection<UserDto>> GetSubscribers(Guid userId)
+    {
+        return (await httpClient.GetFromJsonAsync<ICollection<UserDto>>($"subscribers/{userId}"))!;
+    }
+
     public async Task<ICollection<UserDto>> GetUsers(IEnumerable<Guid> ids)
     {
         var query = new QueryBuilder();

@@ -9,7 +9,7 @@ RUN dotnet publish -c release -o /app --no-restore ./${service}
 
 FROM mianni/ms-services:migrator as migrator
 WORKDIR /app
-COPY --from=build /app/PostService.dll ./
+COPY --from=build /app/NotificationsService.dll ./
 ENTRYPOINT ["dotnet", "Migrator.dll", "--dll", "NotificationsService.dll"]
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine

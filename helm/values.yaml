@@ -6,11 +6,21 @@ postgresql:
     size: 512Mi
     mountPath: /var/lib/postgresql/data
 
+rabbitmq:
+  fullnameOverride: rabbitmq
+  auth:
+    username: rabbitmq
+    password: mysecretpassword
+
 secrets:
+  rabbitmq-secret:
+    ConnectionStrings__RabbitMQ: "YW1xcDovL3JhYmJpdG1xOm15c2VjcmV0cGFzc3dvcmRAcmFiYml0bXE6NTY3Mg=="
   user-service-secret:
     ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1VzZXJzOw=="
   post-service-secret:
     ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc1Bvc3RzOw=="
+  notifications-service-secret:
+    ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc05vdGlmaWNhdGlvbnM7"
   auth-service-secret:
     ConnectionStrings__Postgres: "U2VydmVyPXBvc3RncmVzO1BvcnQ9NTQzMjtVc2VyaWQ9cG9zdGdyZXM7UGFzc3dvcmQ9bXlzZWNyZXRwYXNzd29yZDtEYXRhYmFzZT1Nc0F1dGg7Ow=="
     Jwt__PrivateKey: "TUlJRXBRSUJBQUtDQVFFQXRrUjZvZnh0TDhTUEtqSEZhT0o5Q2NNZUFQNWJJK0JGMzNTbkZYSkhLS0pOTTdWVEp5NjRkWWZQUmVqMXZSVGhzbXZvMUhkZWpWR2ZhZlRCd2FyenlOZ0l5emVoaW1uYTZrR0lYNCtycXhYT3pGTkF2SUJ0UW5pZnRHaHZ6emhUaHdZWTErYlNNaGxGYkZRTlF5ZFcxcjgyeE1kQUx3anhVTGtwcmVvTENPMitNK2NnMkp4b213TDVSbk54RWNEcUl0a0tBREVpMXBMekRkWnZyK2lodkZDdHh3eUx1clB2U0FQSWMrMFR0dGVreE9EM0lLMGFJR3FwaC9NNUpLZlNrazBQQWJhWlFtMGwranh4WWdUbkVYR0dmdUpHNlVPSmI2S0IyMTBnK0xlU3NwNlR3VitLMlphaStQYUYwTGVyTUFHL1dBZGRVVzdaV0xXYWFTMGt2d0lEQVFBQkFvSUJBRmRZNCtnakgzUkgzMUFhUC8rdW9ydDk3VEFPdFVDeEp1c2FiVVFDMndVbkdwWlFMRVJYeUlCU2tFdHhnK3FVU2tFR0k3TkdiV0tPSGpaWjNFemlqeWZPR0JERFhVQUcwS2w0dEZFUGVmWm9ZZzFiVEdmSnFCSzEyZHRNUFdEeUhsMVQxNjRINk8yblhMUzRadzZxbUp3YlVMVG13K1NHaFpibzFZZUo1TFhtNGViT1FsZjZjR3pPVlNZcTZxczNDMVV6dmdPYzBRZ0ZCNDFtLyt5Mm1icEZ5eEZGN2IxZUJSS3BsTmN0VE1uSUV1SmJ1QVR1MTF1L0J4Tmh2SlpFVFBWa0w5MlpJZDR4WHU5R0s4OVdjKzNpVGVGZUhFTzJrS2ZDK3ZBTjhaMjR1eDBuNDJXVnNDV0MvMC9KZzl1OGs2Rm03SUdjUFJRWXJkMlBNOS9DU1lrQ2dZRUE1R0dnRGVXNnh5eGhZYUQ1U09UMlBmdmFFcEQvMFQ3N1hmdi9Ddlc0dm9JVE01Z3FKcnIrR3VXdUZ5eEhyUXU5am1Wb1NoVE5HV01ha3FpM0V1UXJZaFRiSTJmbi8xcEtxSkJwZExVL1IyeThHRGJkclFnSlV1UjNqVUFVbXk1akRuU0hZMHk3ZFV3bG1TcGw5TXlBWUkvUzRkSERMdkdlSUJ1cmxnbGZhdHNDZ1lFQXpFODdYaTVXUG83VWNHRHpaWi9wU3A5K0NBOUJsVDB5VFFUZ2NEOC9xQUxia0drWFRZbXBIRU05eGZIYTY4NlRqcHNFbmtWNHNiR3BiemZJQll6RHQrKzg0aWZPZFhYMkJsN0ZQbUJZZUlIbzlKcnFDakhOU1o5Z2tVRE92Nll6cldYcXBiN1FsMUxnQmtFNkdFb0szNXBFMzdpTlh6aUZabW5tNWhuL0tPMENnWUVBZ3luS2FaRGg5NWYyaWNLUXlSdXVqS1REZHR4Ti85ZmpOL1FOWXpjQ2xtOVFKZGFqaHNEb1JYeFp3cmRNcHdiU0pDRDdoMmh3N3I2ck9VV3FkekFSOW0reDk2Q3FiazVtQ0crQUVXWXk1SXQvYjR5N1BiQWE0citTSmM2Q3h5a1ovT2hTQldiQlZybVg4bUtXVWNUTmlpZXYzci9CRUluMTNjem1lL0lBR2ZjQ2dZRUF6Qm5DMXgwM0x4dUVnaGQ0VDJkbXFST1gxZmxYclAwTGlRRjhMT1lpYzNjWFhMWi9md2dzbG4xZDhxYmY2bjNkenJKeDlLSzJKZDJ6dzlWWHpxT0d5Zk9ISCs1Z1E5dHB3WWRmU0NiN2VyZGN2eThhNnNCQnNuQ3pDYWhTWWdab3phcG90TmRnaml0T2ZURWdGaSt4bVJzRi92RGcyZVVlN3VhUXNnSDZjeWtDZ1lFQXNueCtlSzI2Tkg3TXdlTHA3anB1Vzl1b094RHNVN1haSFNmZGpEM2ltYTVTN0EzQktRcnVtVjhPQlMwU0tmWlRadEcyMG5kKysyanJVSkg4M0kyZE9iKyt6SElaeWgySHc3dmZic2RxZ0JqOWt5MlNEN2QxaHlJNVVzb1RWZDhsTXhwVjdkQkN0K1RadUUyL1Jpa0x0WllNd1A1OFN6WUhzUlFPWlRDdll0UT0K"
@@ -94,10 +104,12 @@ microservises:
       image:
         name: mianni/ms-services:post-migrator
       secret: post-service-secret
+    rabbitmq: true
     image:
       name: mianni/ms-services:post
     secrets:
      - post-service-secret
+     - rabbitmq-secret
     configs:
      - common
     service:
@@ -130,6 +142,60 @@ microservises:
         port: 80
     ingress:
       path: /api/timeline
+      port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
+
+  notifications-service:
+    replicaCount: 1
+    migrations:
+      image:
+        name: mianni/ms-services:notifications-migrator
+      secret: notifications-service-secret
+    rabbitmq: true
+    image:
+      name: mianni/ms-services:notifications
+    secrets:
+     - notifications-service-secret
+     - rabbitmq-secret
+    configs:
+     - common
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      path: /api/notifications
+      port: http
+    istio:
+      timeout: 5s
+      retries:
+        attempts: 3
+        retryOn: 5xx
+        perTryTimeout: 5s
+
+  notifier-service:
+    replicaCount: 1
+    image:
+      name: mianni/ms-services:notifier
+    rabbitmq: true
+    secret:
+     - rabbitmq-secret
+    configs:
+     - common
+    service:
+      ports:
+      - name: http
+        containerPort: 5000
+        port: 80
+    ingress:
+      sse: true
+      path: /api/notifier
       port: http
     istio:
       timeout: 5s

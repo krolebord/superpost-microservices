@@ -40,6 +40,19 @@ spec:
             - secretRef:
                 name: {{ $value.migrations.secret }}
       {{- end }}
+      {{- if $value.rabbitmq -}}
+        - name: wait-for-mq
+            image: busybox:latest
+            imagePullPolicy: IfNotPresent
+            command: ['sh', '-c', 'until nc -vz ${POD_NAME}.${POD_NAMESPACE} 5672; do echo "Waiting for rabbitmq..."; sleep 3; done;']
+            env:
+              - name: POD_NAME
+                value: rabbitmq
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+      {{- end-}}
       containers:
         - image: {{ $value.image.name }}
           name: {{ include "common.fullname" . }}

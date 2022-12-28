@@ -6,6 +6,8 @@ metadata:
   name: ms-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "21600"
+    nginx.ingress.kubernetes.io/eventsource: "true"
 spec:
   rules:
     - host: ms.krolebord.online
@@ -16,7 +18,7 @@ spec:
           {{- $microservice := dict "Values" $value }}
           {{- $defaultsCopy := $defaults | deepCopy }}
           {{- with mergeOverwrite $defaultsCopy $microservice }}
-          {{- if not $value.ingress.sse }}}
+          {{- if $value.ingress.sse }}}
           - path: {{ $value.ingress.path }}
             pathType: Prefix
             backend:

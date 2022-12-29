@@ -44,7 +44,7 @@ spec:
         - name: wait-for-mq
           image: busybox:latest
           imagePullPolicy: IfNotPresent
-          command: ['sh', '-c', 'until wget -O rl http://rabbitmq:mysecretpassword@rabbitmq:15672/api/aliveness-test/%2F; do echo "Waiting for rabbitmq..."; sleep 3; done;']
+          command: ['sh', '-c', 'sleep 10s; until wget -O rl http://rabbitmq:mysecretpassword@rabbitmq:15672/api/aliveness-test/%2F; do echo "Waiting for rabbitmq..."; sleep 10s; done;']
           env:
             - name: POD_NAME
               value: rabbitmq

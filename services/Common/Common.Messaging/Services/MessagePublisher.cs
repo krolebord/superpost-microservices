@@ -32,6 +32,7 @@ public class MessagePublisher : IMessagePublisher, IDisposable
 
         var body = JsonSerializer.SerializeToUtf8Bytes(message);
         _channel.BasicPublish(options.ExchangeName, options.RoutingKey, options.Mandatory, properties, body);
+        _logger.LogInformation("Successfully published message of type: {Type}", typeof(T).Name);
     }
     
     public void PublishEvent<T>(T message, string routingKey)

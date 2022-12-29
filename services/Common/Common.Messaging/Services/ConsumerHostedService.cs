@@ -9,14 +9,16 @@ public class ConsumerHostedService : IHostedService
     private readonly IEnumerable<RegisteredHandlerInfo> _handlerInfos;
     private readonly IServiceProvider _serviceProvider;
     private readonly IMessageConsumer _consumer;
+    private readonly ILogger<ConsumerHostedService> _logger;
 
     private readonly List<Action?> _unsubscribeActions = new();
 
-    public ConsumerHostedService(IEnumerable<RegisteredHandlerInfo> handlerInfos, IServiceProvider serviceProvider, IMessageConsumer consumer)
+    public ConsumerHostedService(IEnumerable<RegisteredHandlerInfo> handlerInfos, IServiceProvider serviceProvider, IMessageConsumer consumer, ILogger<ConsumerHostedService> logger)
     {
         _handlerInfos = handlerInfos;
         _serviceProvider = serviceProvider;
         _consumer = consumer;
+        _logger = logger;
 
     }
 
@@ -33,6 +35,7 @@ public class ConsumerHostedService : IHostedService
                 {
                     args
                 })!;
+                _logger.LogInformation("Successfully processed message of type: {Type}", handlerInfo.MessageType.Name);
             };
 
             var method = typeof(IMessageConsumer)
@@ -41,6 +44,8 @@ public class ConsumerHostedService : IHostedService
 
             var unsubscribe = method.Invoke(_consumer, new object?[] { handler, handlerInfo.Options });
             _unsubscribeActions.Add((Action) unsubscribe!);
+            
+            _logger.LogInformation("Registered message handler of type: {Type}", handlerInfo.MessageType.Name);
         }
 
         return Task.CompletedTask;

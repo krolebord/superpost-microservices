@@ -12,7 +12,7 @@ migrateCommand.SetHandler(async (dll) =>
 {
     var directory = AssemblyHelpers.GetAssemblyDirectory();
     var path = Path.Join(directory, dll);
-    if (!File.Exists(path)) throw new FileNotFoundException();
+    if (!File.Exists(path)) throw new FileNotFoundException("Assembly file not found", path);
     
     var assembly = Assembly.LoadFile(path) ?? throw new Exception("Couldn't load target assembly");
     var contextTypes = assembly

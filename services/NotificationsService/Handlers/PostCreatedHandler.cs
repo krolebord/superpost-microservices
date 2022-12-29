@@ -35,10 +35,11 @@ public class PostCreatedHandler : IMessageHandler<PostCreatedEto>
             args.Ack(true);
             return;
         }
-        
+
+        var author = (await _userServiceClient.GetUsers(new[] { args.Message.AuthorId })).FirstOrDefault();
         var subscribers = await GetSubscribers(args.Message.AuthorId);
         
-        if (subscribers is null)
+        if (author is null || subscribers is null)
         {
             args.Ack(true);
             return;
@@ -49,7 +50,7 @@ public class PostCreatedHandler : IMessageHandler<PostCreatedEto>
             Id = Guid.NewGuid(),
             UserId = subscriber.Id,
             CreatedAt = args.Message.CreatedAt,
-            Message = $"New post by {subscriber.Name}",
+            Message = $"New post by {author.Name}",
             Context = new()
             {
                 Id = args.Message.PostId.ToString(),

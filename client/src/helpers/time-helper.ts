@@ -10,14 +10,13 @@ const units = [
 const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
 export const formatRelativeTime = (d1: Date | number | string, d2?: Date | number | string) => {
-  var elapsed = new Date(d1).getTime() - +new Date(d2 ?? Date.now()).getTime();
+  const elapsed = new Date(d1).getTime() - +new Date(d2 ?? Date.now()).getTime();
   
-  try {
+  if (elapsed < 60000) {
+    return 'just now';
+  }
+
   for (const [unit, value] of units)
     if (Math.abs(elapsed) > value || unit == 'second')
       return rtf.format(Math.round(elapsed / value), unit);
-  }
-  catch (e) {
-    console.log(d1, d2);
-  }
 }

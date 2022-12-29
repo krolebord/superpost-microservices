@@ -13,5 +13,5 @@ COPY --from=build /app ./
 ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_BASE=/api/notifier
 EXPOSE 5000
-HEALTHCHECK CMD curl --fail http://localhost:5004/health || exit
+HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit
 ENTRYPOINT ["dotnet", "NotifierService.dll"]

@@ -15,8 +15,8 @@ ENTRYPOINT ["dotnet", "Migrator.dll", "--dll", "NotificationsService.dll"]
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 WORKDIR /app
 COPY --from=build /app ./
-ENV ASPNETCORE_URLS=http://+:5005
+ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_BASE=/api/notifications
-EXPOSE 5005
+EXPOSE 5000
 HEALTHCHECK CMD curl --fail http://localhost:5005/health || exit
 ENTRYPOINT ["dotnet", "NotificationsService.dll"]

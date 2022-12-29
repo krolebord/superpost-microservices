@@ -22,10 +22,10 @@ public class MessageConsumer : IMessageConsumer
     {
         _logger = logger;
         
-        _logger.LogInformation("Creating publisher mq connection");
+        _logger.LogInformation("Creating consumer mq connection");
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
-        _logger.LogInformation("Publisher mq connected");
+        _logger.LogInformation("Consumer mq connected");
     }
     
     private Task ConsumerOnReceived(object sender, BasicDeliverEventArgs args)

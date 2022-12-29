@@ -8,13 +8,18 @@ namespace Common.Messaging.Services;
 
 public class MessagePublisher : IMessagePublisher, IDisposable
 {
+    private readonly ILogger<MessagePublisher> _logger;
     private readonly IConnection _connection;
     private readonly IModel _channel;
 
-    public MessagePublisher(IConnectionFactory factory)
+    public MessagePublisher(IConnectionFactory factory, ILogger<MessagePublisher> logger)
     {
+        _logger = logger;
+        
+        _logger.LogInformation("Creating publisher mq connection");
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
+        _logger.LogInformation("Publisher mq connected");
     }
     
     public void Publish<T>(T message, ProduceOptions options)

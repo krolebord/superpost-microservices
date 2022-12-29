@@ -45,6 +45,8 @@ export const Footer = () => {
         <ServiceStatus label="Posts: " healthCheckUrl="/api/posts/health" />
         <ServiceStatus label="Users: " healthCheckUrl="/api/users/health" />
         <ServiceStatus label="Timeline: " healthCheckUrl="/api/timeline/health" />
+        <ServiceStatus label="Notifications: " healthCheckUrl="/api/notifications/health" />
+        <ServiceStatus label="Notifier: " healthCheckUrl="/api/notifier/health" />
       </span>}
       <button className="whitespace-nowrap" onClick={() => setShowStatus(x => !x)} >{showStatus ? 'Hide status' : 'Show status'}</button>
     </footer>

@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ms-ingress
+  name: ms-ingress-sse
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-read-timeout: "21600"
@@ -18,7 +18,7 @@ spec:
           {{- $microservice := dict "Values" $value }}
           {{- $defaultsCopy := $defaults | deepCopy }}
           {{- with mergeOverwrite $defaultsCopy $microservice }}
-          {{- if $value.ingress.sse }}}
+          {{- if $value.ingress.sse }}
           - path: {{ $value.ingress.path }}
             pathType: Prefix
             backend:
@@ -28,4 +28,4 @@ spec:
                   name: {{ $value.ingress.port }}
           {{- end -}}
           {{- end -}}
-          {{- end -}}
+          {{- end }}

@@ -10,6 +10,7 @@ namespace Common.Messaging.Services;
 
 public class MessageConsumer : IMessageConsumer
 {
+    private readonly ILogger<MessageConsumer> _logger;
     private readonly IConnection _connection;
     private readonly IModel _channel;
 
@@ -17,11 +18,14 @@ public class MessageConsumer : IMessageConsumer
 
     private readonly ConcurrentDictionary<string, HandlerInfo> _handlers = new();
 
-    public MessageConsumer(IConnectionFactory factory)
+    public MessageConsumer(IConnectionFactory factory, ILogger<MessageConsumer> logger)
     {
+        _logger = logger;
+        
+        _logger.LogInformation("Creating publisher mq connection");
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
-        
+        _logger.LogInformation("Publisher mq connected");
     }
     
     private Task ConsumerOnReceived(object sender, BasicDeliverEventArgs args)

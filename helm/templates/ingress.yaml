@@ -16,7 +16,7 @@ spec:
           {{- $microservice := dict "Values" $value }}
           {{- $defaultsCopy := $defaults | deepCopy }}
           {{- with mergeOverwrite $defaultsCopy $microservice }}
-          {{- if not $value.ingress.sse }}}
+          {{- if not $value.ingress.sse }}
           - path: {{ $value.ingress.path }}
             pathType: Prefix
             backend:
@@ -26,4 +26,4 @@ spec:
                   name: {{ $value.ingress.port }}
           {{- end -}}
           {{- end -}}
-          {{- end -}}
+          {{- end }}

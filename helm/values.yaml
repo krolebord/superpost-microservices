@@ -9,8 +9,10 @@ postgresql:
 rabbitmq:
   fullnameOverride: rabbitmq
   auth:
-    username: rabbitmq
-    password: mysecretpassword
+    username: "rabbitmq"
+    password: "mysecretpassword"
+  persistence:
+    enabled: false
 
 secrets:
   rabbitmq-secret:

@@ -8,6 +8,7 @@ export const useNotifications = () => {
   useQuery({
     ...notificationsQuery(),
     placeholderData: [],
+    refetchOnWindowFocus: false,
     onSuccess(notifications) {
       notificationsRef.current = notifications;
     },
@@ -19,12 +20,11 @@ export const useNotifications = () => {
     const source = new EventSource(notificationsSSEUrl, { withCredentials: true });
 
     source.onmessage = (event) => {
-      console.log(event);
+      const newNotification = JSON.parse(event.data) as Notification;
+      notificationsRef.current = [newNotification, ...notificationsRef.current];
       onStoreChange();
-      // const notifications = JSON.parse(event.data);
-      // notificationsRef.current = notifications;
     };
-    console.log("subscribed to notifications");
+
     return () => {
       source.close();
     }

@@ -183,10 +183,15 @@ microservises:
 
   notifier-service:
     replicaCount: 1
+    migrations:
+      image:
+        name: mianni/ms-services:notifications-migrator
+      secret: notifications-service-secret
+    rabbitmq: true
     image:
       name: mianni/ms-services:notifier
-    rabbitmq: true
-    secret:
+    secrets:
+     - notifications-service-secret
      - rabbitmq-secret
     configs:
      - common

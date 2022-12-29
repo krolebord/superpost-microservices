@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuth(builder.Configuration.GetJwtOptions());
 builder.Services.AddHealthChecks();
 builder.Services.AddCors();
-builder.Services.AddServerSentEventsClientIdProvider<ServerSentEventsClientIdProvider>();
 builder.Services.AddServerSentEvents<INotifierService, NotifierService.NotifierService>();
 builder.Services.AddMessaging(new()
 {

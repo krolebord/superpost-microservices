@@ -38,5 +38,5 @@ export const notificationsQuery = () => ({
 
 
 export const markNotificationsRead = () => {
-  return typedFetch<void>(`${notificationsApiUrl}/mark-read`, { method: 'POST' });
+  return fetch(`${notificationsApiUrl}/mark-read`, { method: 'POST' });
 }

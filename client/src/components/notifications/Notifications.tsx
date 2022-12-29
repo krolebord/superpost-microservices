@@ -17,7 +17,7 @@ const NotificationDisplay: FC<{ notification: Notification, className?: string }
         {notification.contextType ? ContextType[notification.contextType] : 'Notification'}
       </span>
       <span>
-        {formatRelativeTime(new Date(notification.sentAt))}
+        {formatRelativeTime(notification.sentAt)}
       </span>
     </p>
     <p>{notification.message}</p>

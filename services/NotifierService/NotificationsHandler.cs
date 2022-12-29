@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Common.Auth;
 using Common.Messaging.Interfaces;
 using Common.Messaging.Models;
 using NotifierService.Models;
@@ -22,8 +23,11 @@ public class NotificationsHandler : IMessageHandler<NotificationEto>
             return;
         }
 
-        var serializedNotification = JsonSerializer.Serialize(args.Message.Notification);
-        await _notifierService.SendEventAsync(serializedNotification, client => client.Id == args.Message.UserId);
+        var serializedNotification = JsonSerializer.Serialize(args.Message.Notification, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+        await _notifierService.SendEventAsync(serializedNotification, client => client.User.GetUserId() == args.Message.UserId);
         args.Ack(true);
     }
 }

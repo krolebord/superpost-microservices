@@ -5,12 +5,12 @@ import { AuthLayout } from "./components/auth/AuthLayout";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import { NotFound } from "./components/NotFound";
 import { RootLayout } from "./components/RootLayout";
-import { PostList } from "./components/posts/PostList";
 import { ProfilePage } from "./components/users/ProfilePage";
 import { queryClient } from "./query-client";
 import { homeTimelineLoader, newTimelineLoader, postTimelineLoader } from "./api/timeline";
 import { PostPage } from "./components/posts/PostPage";
 import { HomeTimelinePage, NewTimelinePage } from "./components/timeline/TimelinePages";
+import { HaltPage } from "./components/halt/Halt";
 
 const unauthorizedRoutes: RouteObject[] = [
   {
@@ -50,6 +50,13 @@ const authenticatedRoutes: RouteObject[] = [
   }
 ];
 
+export const anonymousRoutes: RouteObject[] = [
+  {
+    path: '/halt',
+    element: <HaltPage />,
+  }
+];
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -65,7 +72,8 @@ export const router = createBrowserRouter([
         id: 'authenticated',
         element: <RequireAuth />,
         children: authenticatedRoutes
-      }
+      },
+      ...anonymousRoutes
     ]
   }
 ]);

@@ -1,3 +1,4 @@
+import { FetchQueryOptions, QueryOptions, UseQueryOptions } from "@tanstack/react-query";
 import { typedFetch } from "./helpers";
 
 type NewPost = {
@@ -17,3 +18,17 @@ export const createPost = (post: NewPost) => {
   });
 }
 
+
+export const getHaltStatus = () => {
+  return typedFetch<boolean>(`${postsApiUrl}/halt`);
+}
+
+export const haltQuery = {
+  queryFn: getHaltStatus,
+  queryKey: ['halt'],
+} satisfies QueryOptions;
+
+
+export const toggleHalt = () => {
+  return fetch(`${postsApiUrl}/halt`, { method: 'POST' });
+}

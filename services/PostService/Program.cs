@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using PostService;
 using PostService.Data;
 using PostService.Endpoints;
+using PostService.Middlewares;
+using PostService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<PostsContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
 });
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<HaltService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuth(builder.Configuration.GetJwtOptions());
 builder.Services.AddMessaging(new()
@@ -31,6 +34,8 @@ app.MapHealthChecks("/health");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<SimulatedLatencyMiddleware>();
 
 app.MapEndpoints();
 

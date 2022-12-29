@@ -101,7 +101,7 @@ microservises:
         perTryTimeout: 5s
 
   post-service:
-    replicaCount: 1
+    replicaCount: 2
     migrations:
       image:
         name: mianni/ms-services:post-migrator

@@ -14,7 +14,7 @@ public class SimulatedLatencyMiddleware
     {
         _next = next;
         _haltService = haltService;
-        _delayInMs = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
+        _delayInMs = 1800;
     }
 
     public async Task Invoke(HttpContext context)
